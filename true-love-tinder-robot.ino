@@ -66,9 +66,9 @@ void setup() {
   emic += 10; //increases volume of emic by 10 decibels
 
   leftRightServo.attach(3);
-  leftRightServo.write(90);
-
   forwardBackServo.attach(5);
+
+  leftRightServo.write(90);
   forwardBackServo.write(90);
 
   //pinMode(emicLedPin, OUTPUT);
@@ -104,6 +104,7 @@ void loop() {
     "Look carefully",
     "Judge this person",
     "I can read your feelings",
+    "Oh look, another bag of meat",
     "Can you see yourself spending your life with this person?",
     "Determine if this person has any value",
     "I can tell that you are desperate for love",
@@ -115,27 +116,26 @@ void loop() {
 
   char* swipeLeftWords[] = {
     "Swipe Left",
-    "Swipe left",
     "No match here",
     "Swipe left",
-    "You're picky",
+    "I don't like this one either",
     "Not a match",
-    "No way",
     "This person is worthless",
+    "Dodged a bullet",
     "Swipe left",
+    "No way",
     "Nope"
   };
 
   char* swipeRightWords[] = {
     "Swipe right",
     "Swipe right",
-    "I can tell that you like this one",
+    "You're not very picky, are you",
     "Swipe right",
-    "You like this person",
+    "Your body tells me you want this person",
     "Take this one home",
     "Swipe right",
     "Hubba hubba",
-    "Swipe right",
     "Swipe right"
   };
 
@@ -167,7 +167,10 @@ void loop() {
         iRight = 0;
         state = giveIntro;
       } else {
+        digitalWrite(gotReadingLed, HIGH);
+        delay(500);
         digitalWrite(gotReadingLed, LOW);
+        delay(500);
       }
       break;
 
@@ -245,26 +248,33 @@ void loop() {
         hasSwipedLeft = true;
         digitalWrite(swipeLeftRedLed, HIGH);
         digitalWrite(swipeRightGreenLed, LOW);
-        //forwardBackServo.write(servoForward);
-        //leftRightServo.write(servoLeft);
 
+        //slightly to the right
+        for (LRpos = 90; LRpos >= 80; LRpos -= 1)
+        {
+          leftRightServo.write(LRpos);  // Move to next position
+          delay(20);               // Short pause to allow it to move
+        }
 
         //forward
-        for (FBpos = 90; FBpos >= 45; FBpos -= 1)
+        for (FBpos = 90; FBpos >= 35; FBpos -= 1)
         {
           forwardBackServo.write(FBpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
         }
 
+        //short delay at the front
+        delay(800);
+
         //left
-        for (LRpos = 90; LRpos <= 150; LRpos += 2)
+        for (LRpos = 80; LRpos <= 150; LRpos += 2)
         {
           leftRightServo.write(LRpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
         }
 
         //back
-        for (FBpos = 45; FBpos <= 90; FBpos += 1)
+        for (FBpos = 35; FBpos <= 90; FBpos += 1)
         {
           forwardBackServo.write(FBpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
@@ -292,28 +302,38 @@ void loop() {
         digitalWrite(swipeLeftRedLed, LOW);
         //forwardBackServo.write(servoForward);
         //leftRightServo.write(servoRight);
+        
+//slightly left
+        for (LRpos = 90; LRpos <= 100; LRpos += 2)
+        {
+          leftRightServo.write(LRpos);  // Move to next position
+          delay(20);               // Short pause to allow it to move
+        }
+
 
         //forward
-        for (FBpos = 90; FBpos >= 45; FBpos -= 1)
+        for (FBpos = 90; FBpos >= 35; FBpos -= 1)
         {
           forwardBackServo.write(FBpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
         }
 
+        //short delay at the front
+        delay(800);
+
         //swipe right
-        for (LRpos = 90; LRpos >= 30; LRpos -= 1)
+        for (LRpos = 100; LRpos >= 30; LRpos -= 1)
         {
           leftRightServo.write(LRpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
         }
 
         //back
-        for (FBpos = 45; FBpos <= 90; FBpos += 1)
+        for (FBpos = 35; FBpos <= 90; FBpos += 1)
         {
           forwardBackServo.write(FBpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
         }
-
 
         //left back to center
         for (LRpos = 30; LRpos <= 90; LRpos += 2)
@@ -321,9 +341,6 @@ void loop() {
           leftRightServo.write(LRpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
         }
-
-
-
 
         state = beginSwiping;
       }
@@ -339,10 +356,55 @@ void loop() {
       digitalWrite(gotReadingLed, LOW); //lights off...
       digitalWrite(swipeRightGreenLed, LOW);
       digitalWrite(swipeLeftRedLed, LOW);
+
+
       emic.speak(F("go away now. please take your hands off the sensors. goodbye and good luck with your love life."));
+
+      //waving goodbye
+      for (LRpos = 60; LRpos <= 120; LRpos += 2)
+      {
+        leftRightServo.write(LRpos);  // Move to next position
+        delay(20);               // Short pause to allow it to move
+      }
+      for (LRpos = 120; LRpos >= 60; LRpos -= 2)
+      {
+        leftRightServo.write(LRpos);  // Move to next position
+        delay(20);               // Short pause to allow it to move
+      }
+      for (LRpos = 60; LRpos <= 120; LRpos += 2)
+      {
+        leftRightServo.write(LRpos);  // Move to next position
+        delay(20);               // Short pause to allow it to move
+      }
+      for (LRpos = 120; LRpos >= 60; LRpos -= 2)
+      {
+        leftRightServo.write(LRpos);  // Move to next position
+        delay(20);               // Short pause to allow it to move
+      }
+
+      for (LRpos = 60; LRpos <= 120; LRpos += 2)
+      {
+        leftRightServo.write(LRpos);  // Move to next position
+        delay(20);               // Short pause to allow it to move
+      }
+      for (LRpos = 120; LRpos >= 60; LRpos -= 2)
+      {
+        leftRightServo.write(LRpos);  // Move to next position
+        delay(20);               // Short pause to allow it to move
+      }
+      for (LRpos = 60; LRpos <= 120; LRpos += 2)
+      {
+        leftRightServo.write(LRpos);  // Move to next position
+        delay(20);               // Short pause to allow it to move
+      }
+      for (LRpos = 120; LRpos >= 60; LRpos -= 2)
+      {
+        leftRightServo.write(LRpos);  // Move to next position
+        delay(20);               // Short pause to allow it to move
+      }
+
       if (GSR < 150) { //go back to the beginning.
         state = waiting;
-      } else {
       }
       break;
 
