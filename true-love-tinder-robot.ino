@@ -2,7 +2,7 @@
  * It's built with an Arduino with the Emic 2 Text-to-Speech Module, some LEDs, a simple GSR sensor, and a servo.
  * I use the Emic 2 Arduino library: https://github.com/pAIgn10/EMIC2
  * This finite state machine example was helpful for me buiding my own: http://hacking.majenko.co.uk/finite-state-machine
- * This is the first prototype of this project.
+ * This is the version I'm showing as my Physical Computing final.
  */
 
 #include <SPI.h>
@@ -71,7 +71,6 @@ void setup() {
   leftRightServo.write(90);
   forwardBackServo.write(90);
 
-  //pinMode(emicLedPin, OUTPUT);
   pinMode(rxPin, INPUT);
   pinMode(txPin, OUTPUT);
 
@@ -132,7 +131,7 @@ void loop() {
     "Swipe right",
     "You're not very picky, are you",
     "Swipe right",
-    "Your body tells me you want this person",
+    "Your heart tells me you want this person",
     "Take this one home",
     "Swipe right",
     "Hubba hubba",
@@ -176,9 +175,9 @@ void loop() {
 
     case giveIntro:
       emic.speak(F("hello human. i am the true love tender robot. i'm going to help you find love."));
-      //emic.speak(F("as you look carefully at each tinder profile,"));
-      //emic.speak(F("i will read your heart's desire and then i will tell you whether or not you are a good match with that person."));
-      // emic.speak(F("you can trust me because i am a robot. let's begin."));
+      emic.speak(F("as you look carefully at each tinder profile,"));
+      emic.speak(F("i will read your heart's desire and then i will tell you whether or not you are a good match with that person."));
+      emic.speak(F("you can trust me because i am a robot. let's begin."));
       state = beginSwiping;
       break;
 
@@ -202,8 +201,6 @@ void loop() {
       if (GSR > 150) { //calculate only if there's a reading.
         if (timePassed >= 1 && hasBegun == false) { //after one second since beginning...
           emic.speak(startingWords[iBegin]); //speak the starting words...
-          // leftRightServo.write(servoCenter); //move the servo back to center...
-          // forwardBackServo.write(servoBack);
           readingStart = GSR; //get the initial reading...
           iBegin++; //get ready to move on to the next starting words next time.
           hasBegun = true;
@@ -249,8 +246,8 @@ void loop() {
         digitalWrite(swipeLeftRedLed, HIGH);
         digitalWrite(swipeRightGreenLed, LOW);
 
-        //slightly to the right
-        for (LRpos = 90; LRpos >= 80; LRpos -= 1)
+        //slightly to the right to center it
+        for (LRpos = 90; LRpos >= 60; LRpos -= 1)
         {
           leftRightServo.write(LRpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
@@ -267,7 +264,7 @@ void loop() {
         delay(800);
 
         //left
-        for (LRpos = 80; LRpos <= 150; LRpos += 2)
+        for (LRpos = 60; LRpos <= 150; LRpos += 2)
         {
           leftRightServo.write(LRpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
@@ -300,16 +297,13 @@ void loop() {
         hasSwipedRight = true;
         digitalWrite(swipeRightGreenLed, HIGH);
         digitalWrite(swipeLeftRedLed, LOW);
-        //forwardBackServo.write(servoForward);
-        //leftRightServo.write(servoRight);
-        
-//slightly left
-        for (LRpos = 90; LRpos <= 100; LRpos += 2)
+
+        //slightly to the right to center it
+        for (LRpos = 90; LRpos >= 60; LRpos -= 1)
         {
           leftRightServo.write(LRpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
         }
-
 
         //forward
         for (FBpos = 90; FBpos >= 35; FBpos -= 1)
@@ -322,7 +316,7 @@ void loop() {
         delay(800);
 
         //swipe right
-        for (LRpos = 100; LRpos >= 30; LRpos -= 1)
+        for (LRpos = 60; LRpos >= 20; LRpos -= 1)
         {
           leftRightServo.write(LRpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
@@ -336,7 +330,7 @@ void loop() {
         }
 
         //left back to center
-        for (LRpos = 30; LRpos <= 90; LRpos += 2)
+        for (LRpos = 20; LRpos <= 90; LRpos += 2)
         {
           leftRightServo.write(LRpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
@@ -356,7 +350,6 @@ void loop() {
       digitalWrite(gotReadingLed, LOW); //lights off...
       digitalWrite(swipeRightGreenLed, LOW);
       digitalWrite(swipeLeftRedLed, LOW);
-
 
       emic.speak(F("go away now. please take your hands off the sensors. goodbye and good luck with your love life."));
 
