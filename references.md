@@ -1,5 +1,7 @@
 #References
 
+Here's my inspiration and references for this project, from art to code to circuits.
+
 ART REFERENCES:
 
 [Social Turkers](http://socialturkers.com/)
