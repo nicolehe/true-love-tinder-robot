@@ -1,8 +1,8 @@
-/* This is the code for V1 of the True Love Tinder Robot.
+/* This is the code for V2 of the True Love Tinder Robot.
  * It's built with an Arduino with the Emic 2 Text-to-Speech Module, some LEDs, a simple GSR sensor, and a servo.
  * I use the Emic 2 Arduino library: https://github.com/pAIgn10/EMIC2
  * This finite state machine example was helpful for me buiding my own: http://hacking.majenko.co.uk/finite-state-machine
- * This is the version I'm showing as my Physical Computing final.
+ * This is the version I'm showing at the ITP Winter Show.
  */
 
 #include <SPI.h>
@@ -117,10 +117,10 @@ void loop() {
     "Swipe Left",
     "No match here",
     "Swipe left",
-    "I don't like this one either",
+    "Dodged a bullet",
+    "You strongly dislike this one",
     "Not a match",
     "This person is worthless",
-    "Dodged a bullet",
     "Swipe left",
     "No way",
     "Nope"
@@ -128,10 +128,10 @@ void loop() {
 
   char* swipeRightWords[] = {
     "Swipe right",
-    "Swipe right",
     "You're not very picky, are you",
     "Swipe right",
-    "Your heart tells me you want this person",
+    "If you say so",
+    "Whatever floats your boat",
     "Take this one home",
     "Swipe right",
     "Hubba hubba",
@@ -175,8 +175,6 @@ void loop() {
 
     case giveIntro:
       emic.speak(F("hello human. i am the true love tender robot. i'm going to help you find love."));
-      emic.speak(F("as you look carefully at each tinder profile,"));
-      emic.speak(F("i will read your heart's desire and then i will tell you whether or not you are a good match with that person."));
       emic.speak(F("you can trust me because i am a robot. let's begin."));
       state = beginSwiping;
       break;
@@ -254,7 +252,7 @@ void loop() {
         }
 
         //forward
-        for (FBpos = 90; FBpos >= 35; FBpos -= 1)
+        for (FBpos = 90; FBpos >= 30; FBpos -= 1)
         {
           forwardBackServo.write(FBpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
@@ -271,7 +269,7 @@ void loop() {
         }
 
         //back
-        for (FBpos = 35; FBpos <= 90; FBpos += 1)
+        for (FBpos = 30; FBpos <= 90; FBpos += 1)
         {
           forwardBackServo.write(FBpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
@@ -306,7 +304,7 @@ void loop() {
         }
 
         //forward
-        for (FBpos = 90; FBpos >= 35; FBpos -= 1)
+        for (FBpos = 90; FBpos >= 30; FBpos -= 1)
         {
           forwardBackServo.write(FBpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
@@ -323,7 +321,7 @@ void loop() {
         }
 
         //back
-        for (FBpos = 35; FBpos <= 90; FBpos += 1)
+        for (FBpos = 30; FBpos <= 90; FBpos += 1)
         {
           forwardBackServo.write(FBpos);  // Move to next position
           delay(20);               // Short pause to allow it to move
