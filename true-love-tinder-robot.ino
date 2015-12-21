@@ -63,7 +63,7 @@ void setup() {
 
   emic.begin(rxPin, txPin);
   emic.setVoice(2);  // Sets the voice (9 choices: 0 - 8)
-  emic += 10; //increases volume of emic by 10 decibels
+  emic += 18; //increases volume of emic by 18 decibels
 
   leftRightServo.attach(3);
   forwardBackServo.attach(5);
